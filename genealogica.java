@@ -13,4 +13,5 @@ public class genealogica {
     public String ancestralComumMaisProximo(String pessoa1, String pessoa2){
 
     }
+    
 }
