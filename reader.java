@@ -4,7 +4,7 @@ import java.util.HashMap;
 
 public class reader {
     
-    public void ler(String caminho){
+    public HashMap<String, Tree> ler(String caminho){
     try{
 
         Scanner sc = new Scanner(new File(caminho));//aqui abre o arquivo
@@ -27,15 +27,23 @@ public class reader {
             pessoas.put(filho, new Tree(filho));
             }
 
-            System.out.println(pai + " -> " + filho);
+            Tree dad = pessoas.get(pai);//Crio nodo pai 
+            Tree son = pessoas.get(filho);//o filho tbm
+          
+            if (son.getparent()==null){//Por causa do Jon que tem dois pais
+              dad.addChild(son);//adiciono o nodo filho como child daquele pai
+            }
 
         }
-
         sc.close();
 
+        return pessoas;
+
+        
         
     }catch(Exception e){
           System.out.println("Erro: " + e.getMessage());
+          return null;
     }
 }
 }
