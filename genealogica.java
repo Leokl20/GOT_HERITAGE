@@ -1,6 +1,16 @@
+import java.util.HashMap;
+
 public class genealogica {
-    bool ehAncestral(string ancestral, string descendente):
-    bool saoIrmaos(string pessoa1, string pessoa2):
-    bool saoPrimos(string pessoa1, string pessoa2):
-    string ancestralComumMaisProximo(string pessoa1, string pessoa2):
+    public boolean ehAncestral(String ancestral, String descendente){
+
+    }
+    public boolean saoIrmaos(String pessoa1, String pessoa2){
+
+    }
+    public boolean saoPrimos(String pessoa1, String pessoa2){
+
+    }
+    public String ancestralComumMaisProximo(String pessoa1, String pessoa2){
+
+    }
 }
