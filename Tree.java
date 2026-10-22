@@ -5,9 +5,9 @@ public class Tree implements TreeTad{
 
     private ArrayList<Tree> children;
     private Tree parent;
-    private Integer item;
+    private String item;
 
-    public Tree(Integer item){
+    public Tree(String item){
         this.item=item;
         this.parent=null;
         this.children = new ArrayList<>();
@@ -17,7 +17,7 @@ public class Tree implements TreeTad{
         return this.parent;
     }
 
-    public Integer getitem(){
+    public String getitem(){
         return this.item;
     }
     public void  addChild(Tree tree){
