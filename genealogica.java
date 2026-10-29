@@ -23,13 +23,36 @@ public class genealogica {
         return false;
 
     }
-    public boolean saoIrmaos(String pessoa1, String pessoa2){
-        return false;
+
+    public boolean saoIrmaos(String pessoa1, String pessoa2){//foi facil. pega o pai de cada pessoa e ve se é o mesmo. Tambem checa se não é a mesma pessoa
+        Tree p1 = pessoas.get(pessoa1);
+        Tree p2 = pessoas.get(pessoa2);
+
+        if (p1.getparent()!=p2.getparent()) return false;
+        else if(p1==p2)return false;
+        else return true;
+        
     }
     public boolean saoPrimos(String pessoa1, String pessoa2){
-         return false;
+         Tree p1 = pessoas.get(pessoa1);
+        Tree p2 = pessoas.get(pessoa2);
+
+        if (p1.getparent().getparent()!=p2.getparent().getparent()) return false;//avós são diferentes? false
+        else if (p1.getparent()==p2.getparent()){//pai igual? false
+            System.out.println("São irmãos!");
+            return false;
+        } 
+        else if(p1==p2){
+             System.out.println("Mesma pessoa.");
+            return false;
+        }
+        else return true;
     }
     public String ancestralComumMaisProximo(String pessoa1, String pessoa2){
+        Tree p1 = pessoas.get(pessoa1);
+        Tree p2 = pessoas.get(pessoa2);
+
+        for(p1 : p2)
          return null;
     }
     
