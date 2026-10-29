@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import java.util.HashMap;
 
 public class genealogica {
@@ -51,9 +52,20 @@ public class genealogica {
     public String ancestralComumMaisProximo(String pessoa1, String pessoa2){
         Tree p1 = pessoas.get(pessoa1);
         Tree p2 = pessoas.get(pessoa2);
+        ArrayList<String> lst = new ArrayList<>();
+        while(p1.getparent() !=null){// enquanto o pai de p1 for diferente de null ele guarda no array pra comapração
+            lst.add(p1.getitem());
+            p1 = p1.getparent();
+        }
 
-        for(p1 : p2)
-         return null;
-    }
-    
+        if (p1.getitem()==p2.getitem()) return "Mesma pessoa! ";
+
+        while(p2.getparent()!=null){// aqui que acontece a comparação, por ser ArrayList o contains ajudou mt.
+            if(lst.contains(p2.getitem())){
+                return p2.getitem();
+            }
+            p2 = p2.getparent();
+        }
+         return "Nenhum ancestral em comum. ";
+}
 }
