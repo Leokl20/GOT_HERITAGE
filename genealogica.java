@@ -5,52 +5,66 @@ public class genealogica {
     private HashMap<String, Tree> pessoas;
 
     public genealogica(HashMap<String, Tree> pessoas) {
-    this.pessoas = pessoas;
+        this.pessoas = pessoas;
     }
 
-    public boolean ehAncestral(String ancestral, String descendente){
+    public boolean ehAncestral(String ancestral, String descendente) {
         Tree no = pessoas.get(descendente);
-        if (no==null){//aqui serve pra ver se o descendente realmente existe.
+        if (no == null) {
             return false;
         }
-        
-        while (no.getparent()!=null){// pra ele procurar até a raiz
-            
-            if(no.getitem()!= ancestral){//se o nome do descendente não for igual ao do ascendente 
-            no = no.getparent();//então o nó vai virar seu pai até o if falhar
+
+        // Sobe pelos pais do descendente
+        Tree aux = no.getparent();
+        while (aux != null) {
+            if (aux.getitem().equals(ancestral)) {
+                return true;
             }
-            return true;
+            aux = aux.getparent();
         }
         return false;
-
     }
 
-    public boolean saoIrmaos(String pessoa1, String pessoa2){//foi facil. pega o pai de cada pessoa e ve se é o mesmo. Tambem checa se não é a mesma pessoa
+    public boolean saoIrmaos(String pessoa1, String pessoa2) {
         Tree p1 = pessoas.get(pessoa1);
         Tree p2 = pessoas.get(pessoa2);
 
-        if (p1.getparent()!=p2.getparent()) return false;
-        else if(p1==p2)return false;
-        else return true;
-        
-    }
-    public boolean saoPrimos(String pessoa1, String pessoa2){
-        Tree p1 = pessoas.get(pessoa1);
-        Tree p2 = pessoas.get(pessoa2);
-
-        if (p1.getparent().getparent()!=p2.getparent().getparent()) return false;//avós são diferentes? false
-        else if (p1.getparent()==p2.getparent()){//pai igual? false
-            System.out.println("São irmãos!");
-            return false;
-        } 
-        else if(p1==p2){
-             System.out.println("Mesma pessoa.");
+        // Validações de existência e mesma pessoa
+        if (p1 == null || p2 == null || p1 == p2) {
             return false;
         }
-        else return true;
+        // Valida se têm pai (se forem raízes, não têm pai)
+        if (p1.getparent() == null || p2.getparent() == null) {
+            return false;
+        }
+
+        return p1.getparent() == p2.getparent();
     }
-    public String ancestralComumMaisProximo(String pessoa1, String pessoa2){
-     Tree p1 = pessoas.get(pessoa1);
+
+    public boolean saoPrimos(String pessoa1, String pessoa2) {
+        Tree p1 = pessoas.get(pessoa1);
+        Tree p2 = pessoas.get(pessoa2);
+
+        // Validações de existência e mesma pessoa
+        if (p1 == null || p2 == null || p1 == p2) {
+            return false;
+        }
+        // Valida se têm pais e avós antes de acessar getparent().getparent()
+        if (p1.getparent() == null || p2.getparent() == null) {
+            return false;
+        }
+        if (p1.getparent().getparent() == null || p2.getparent().getparent() == null) {
+            return false;
+        }
+
+        boolean mesmosAvos = (p1.getparent().getparent() == p2.getparent().getparent());
+        boolean mesmosPais = (p1.getparent() == p2.getparent());
+
+        return mesmosAvos && !mesmosPais;
+    }
+
+    public String ancestralComumMaisProximo(String pessoa1, String pessoa2) {
+        Tree p1 = pessoas.get(pessoa1);
         Tree p2 = pessoas.get(pessoa2);
 
         if (p1 == null || p2 == null) {
@@ -60,15 +74,13 @@ public class genealogica {
             return "Mesma pessoa!";
         }
 
-        // Guarda p1 e todos os seus antepassados subindo até à raiz (aux != null)
         ArrayList<String> lst = new ArrayList<>();
         Tree aux = p1;
-        while (aux!= null) {
+        while (aux != null) {
             lst.add(aux.getitem());
-            aux= aux.getparent();
+            aux = aux.getparent();
         }
 
-        // Sobe a partir de p2 até encontrar o primeiro nó presente na lista de p1
         aux = p2;
         while (aux != null) {
             if (lst.contains(aux.getitem())) {
