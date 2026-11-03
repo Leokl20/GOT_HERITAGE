@@ -35,7 +35,7 @@ public class genealogica {
         
     }
     public boolean saoPrimos(String pessoa1, String pessoa2){
-         Tree p1 = pessoas.get(pessoa1);
+        Tree p1 = pessoas.get(pessoa1);
         Tree p2 = pessoas.get(pessoa2);
 
         if (p1.getparent().getparent()!=p2.getparent().getparent()) return false;//avós são diferentes? false
@@ -50,22 +50,33 @@ public class genealogica {
         else return true;
     }
     public String ancestralComumMaisProximo(String pessoa1, String pessoa2){
-        Tree p1 = pessoas.get(pessoa1);
+     Tree p1 = pessoas.get(pessoa1);
         Tree p2 = pessoas.get(pessoa2);
+
+        if (p1 == null || p2 == null) {
+            return "Pessoa não encontrada.";
+        }
+        if (pessoa1.equals(pessoa2)) {
+            return "Mesma pessoa!";
+        }
+
+        // Guarda p1 e todos os seus antepassados subindo até à raiz (aux != null)
         ArrayList<String> lst = new ArrayList<>();
-        while(p1.getparent() !=null){// enquanto o pai de p1 for diferente de null ele guarda no array pra comapração
-            lst.add(p1.getitem());
-            p1 = p1.getparent();
+        Tree aux = p1;
+        while (aux!= null) {
+            lst.add(aux.getitem());
+            aux= aux.getparent();
         }
 
-        if (p1.getitem()==p2.getitem()) return "Mesma pessoa! ";
-
-        while(p2.getparent()!=null){// aqui que acontece a comparação, por ser ArrayList o contains ajudou mt.
-            if(lst.contains(p2.getitem())){
-                return p2.getitem();
+        // Sobe a partir de p2 até encontrar o primeiro nó presente na lista de p1
+        aux = p2;
+        while (aux != null) {
+            if (lst.contains(aux.getitem())) {
+                return aux.getitem();
             }
-            p2 = p2.getparent();
+            aux = aux.getparent();
         }
-         return "Nenhum ancestral em comum. ";
-}
+
+        return "Nenhum ancestral em comum.";
+    }
 }
